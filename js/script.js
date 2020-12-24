@@ -190,13 +190,22 @@ window.addEventListener('DOMContentLoaded', function() {
         return await res.json(); // трансформация в json(возвращается промис)
     };
 
-    getResourse('http://localhost:3000/menu')
-    .then(data =>{
-        data.forEach(({img, altimg, title,descr, price}) => {   //деструктуризация обьектов(вытягиваем каждое свойство ,как отдельную переменную)
-            new MenuCard(img, altimg, title,descr, price, '.menu .container').render();
-        });
-    });
+    //создание карточек с запросом на bd.json
+    // getResourse('http://localhost:3000/menu')
+    // .then(data =>{
+    //     data.forEach(({img, altimg, title,descr, price}) => {   //деструктуризация обьектов(вытягиваем каждое свойство ,как отдельную переменную)
+    //         new MenuCard(img, altimg, title,descr, price, '.menu .container').render();
+    //     });
+    // });
 
+    axios.get('http://localhost:3000/menu')
+        .then(data =>{
+            data.data.forEach(({img, altimg, title,descr, price}) => {   
+                new MenuCard(img, altimg, title,descr, price, '.menu .container').render();
+            });
+        });
+
+    //создание карточек с конструктора
     // new MenuCard(
     //     "img/tabs/vegy.jpg",
     //     "vegy",
